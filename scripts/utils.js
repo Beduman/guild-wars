@@ -1,0 +1,1 @@
+export const wizardsvault = 'https://api.guildwars2.com/v2/wizardsvault/objectives';

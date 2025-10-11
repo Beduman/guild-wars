@@ -1,0 +1,12 @@
+{
+  "name": "guild-wars",
+  "version": "1.0.0",
+  "description": "Guild Wars Website for viewing items and stats.",
+  "license": "ISC",
+  "author": "Brady",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  }
+}

@@ -1,0 +1,54 @@
+nav{
+    background-color: #838383;
+}
+
+nav a{
+    padding: 10px;
+    margin: 5px;
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+nav a:hover {
+    background-color: #dd0000;
+    transform: scale(1.1);
+    transition: .5s;
+}
+
+.header-grid {    
+    top: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+}
+
+.nav-logo {
+    grid-column: 4/5;
+    grid-row: 1/2;
+}
+
+.nav-logo {
+    width: 30%;
+    justify-self: center;
+}
+
+.nav-links-left {
+    grid-column: 1/4;
+    grid-row: 1/2;
+    width: 70%;
+    padding: 20px;
+    border-radius: 5px;
+    transition: .5s;
+}
+
+.nav-links-right {
+    grid-column: 5/8;
+    grid-row: 1/2;
+    width: 70%;
+    padding: 20px;
+    border-radius: 5px;
+    transition: .5s;
+}
