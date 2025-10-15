@@ -55,3 +55,6 @@ nav a:hover {
     border-radius: 5px;
     transition: .5s;
 }
+.sublist {
+    margin-left: 20px;
+}
