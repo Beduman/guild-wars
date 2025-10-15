@@ -1,4 +1,4 @@
-import { characters, items } from './utils.js';
+import { characters, items, getLocalStorage, setLocalStorage, clearLocalStorage } from './utils.js';
 
 function fetchData(url) {
     const connectionurl = url;
@@ -52,13 +52,23 @@ async function displayItems(data, container) {
         const rarity = o.rarity ? ` <strong>Rarity: ${o.rarity}</strong>` : '';
         const desc = o.description ? ` — ${o.description}` : '';
         const icon = o.icon ? `<img src="${o.icon}" alt="${title} icon" style="width:24px;height:24px;vertical-align:middle;margin-right:8px;">` : '';
-        return `<li>${icon}<strong>${title}</strong>${desc}${type}${level}${rarity}</li>`;
+        return `<li class="selectitem" dataid="${o.id}">${icon}<strong>${title}</strong>${desc}${type}${level}${rarity}</li>`;
     }).join('');
-
     container.innerHTML = `<ul>${itemlist}</ul>`;
-    
-}
 
+    container.querySelectorAll('.selectitem').forEach(c => {
+        c.addEventListener('click', function() {
+            const itemid = this.getAttribute('dataid');
+            addItemToStorage(itemid);
+        });
+    });
+}
+function addItemToStorage(selecteditem) {
+    const storedItems = getLocalStorage('selecteditems') || [];
+    storedItems.push(selecteditem);
+    setLocalStorage('selecteditems', storedItems);
+    displaySelectedItems();
+}
 async function fetchCharacters() {
     const data = await fetchData(characters + localStorage.getItem('accesstoken'));
     const container = document.getElementById('characterlist');
@@ -75,5 +85,32 @@ async function fetchItems(charactername) {
     displayItems(data, container);
 }
 
+async function displaySelectedItems() {
+    const storedItems = getLocalStorage('selecteditems') || [];
+    if (storedItems.length === 0) return;
+    const container = document.getElementById('displayselecteditems');
 
+    // Fetch item details
+    const url = `${items}?ids=${storedItems.join(',')}`;
+    const itemdata = await fetchData(url);
+
+
+    // display each item
+    const itemlist = itemdata.map(o => {
+        const title = o.name || o.title || `name ${o.id}`;
+        const type = o.type ? ` <em>(${o.type})</em>` : '';
+        const level = o.level ? ` <strong>Level: ${o.level}</strong>` : '';
+        const rarity = o.rarity ? ` <strong>Rarity: ${o.rarity}</strong>` : '';
+        const desc = o.description ? ` — ${o.description}` : '';
+        const icon = o.icon ? `<img src="${o.icon}" alt="${title} icon" style="width:24px;height:24px;vertical-align:middle;margin-right:8px;">` : '';
+        return `<li class="selectitem" dataid="${o.id}">${icon}<strong>${title}</strong>${desc}${type}${level}${rarity}</li>`;
+    }).join('');
+
+    container.innerHTML = `<ul>${itemlist}</ul>`;
+}
+
+document.getElementById('clearstorage').addEventListener('click', function() {
+    clearLocalStorage('selecteditems');
+});
 document.addEventListener('DOMContentLoaded', fetchCharacters);
+document.addEventListener('DOMContentLoaded', displaySelectedItems);

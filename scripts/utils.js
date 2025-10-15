@@ -11,3 +11,16 @@ export const items = 'https://api.guildwars2.com/v2/items';
 export const characters = 'https://api.guildwars2.com/v2/characters';
 
 export const accesstoken = localStorage.getItem('accesstoken');
+
+export function getLocalStorage(key) {
+  return JSON.parse(localStorage.getItem(key));
+}
+
+export function setLocalStorage(key, data) {
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
+export function clearLocalStorage(key) {
+  localStorage.removeItem(key);
+}
+

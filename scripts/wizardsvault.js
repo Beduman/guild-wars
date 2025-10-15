@@ -19,7 +19,7 @@ function displayData(data, container) {
         const type = o.type ? ` <em>(${o.type})</em>` : '';
         const desc = o.description ? ` — ${o.description}` : '';
         const acclaim = o.acclaim ? ` <strong>Acclaim: ${o.acclaim}</strong>` : '';
-        return `<li><strong>${title}</strong>${type}${desc}${acclaim}</li>`;
+        return `<li><strong>${title}</strong>${type}${desc}${acclaim}<img src="images/astrallogo.png" alt="Astral Logo"></li>`;
     }).join('');
 
     container.innerHTML = `<ul>${items}</ul>`;
@@ -50,6 +50,7 @@ async function fetchMyWizardsVaultWeekly() {
 
     displayData(data, container);
 }
+
 
 document.addEventListener('DOMContentLoaded', fetchWizardsVaultData);
 document.addEventListener('DOMContentLoaded', fetchMyWizardsVaultDaily);
